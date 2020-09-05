@@ -1,4 +1,5 @@
 defmodule MasterKey.Game.Board do
+  @max_tries 10
   defstruct [:answer, guesses: []]
 
   def new do
@@ -16,6 +17,9 @@ defmodule MasterKey.Game.Board do
   def guess(board, guess) do
     %{board | guesses: [guess | board.guesses]}
   end
-  
+
+  def status(%{guesses: [last_guess | _guesses], answer: last_guess}), do: :won
+  def status(%{guesses: guesses}) when length(guesses) == @max_tries, do: :lost
+  def status(_board), do: :playing
 
 end
