@@ -7,7 +7,7 @@ defmodule MasterKey.Game.Score do
   defp reds(answer, guess) do
     answer
     |> Enum.zip(guess)
-    |> Enum.count(fn {answer, guess} -> answer == guess end)
+    |> Enum.count(&(elem(&1, 0) == elem(&1, 1)))
   end
 
   def misses(answer, guess) do
