@@ -31,9 +31,31 @@ defmodule MasterKeyWeb.GameLive do
     assign(socket, game: Game.to_map(socket.assigns.board))
   end
 
+  defp guess(socket, guess) do
+    socket
+    |> assign(board: Game.guess(socket.assigns.board, guess))
+    |> game
+  end
+
   def render(assigns) do
     ~L"""
     <h1>Welcome to MasterKey!</h1>
+    <%= form_for @changeset, "#", [as: :guess, phx_change: :validate, phx_submit: :guess], fn f -> %>
+      <label>
+        Guess: <%= text_input f, :guess %>
+      </label>
+      <%= error_tag f, :guess %>
+      <%= submit "Submit", disabled: !@changeset.valid? %>
+    <%= end %>
     """
   end
+
+  def handle_event("validate", %{"guess" => params}, socket) do
+    {:noreply, changeset(socket, params)}
+  end
+  def handle_event("guess", %{"guess" => %{"guess" => params}}, socket) do
+    {:noreply, guess(socket, params)}
+  end
+
+
 end
