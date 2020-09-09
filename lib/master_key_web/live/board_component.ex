@@ -15,7 +15,16 @@ defmodule MasterKeyWeb.BoardComponent do
       <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">3</div>
       <div class="text-gray-700 text-center bg-gray-400 px-4 py-2 m-2">4</div>
     </div>
+
+    <%= inspect @game %>
+
+    <%= for row <- @game.rows do %>
+      <p> <%= inspect row.guess %> </p>
+    <% end %>
+
     """
   end
+
+
 
 end

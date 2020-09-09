@@ -29,7 +29,11 @@ defmodule MasterKey.Game do
     Enum.map(board.guesses, &to_score(&1, board.answer))
   end
 
-  defp to_score(answer, guess) do
+  # TODO - write tests to not accept (answer, guess) as valid params
+  # I was stuck for hours because I was passing the parameters in the opposite order.
+  # When we compare the guess with the answer, the zip function compares if both are equivalent disregarding the position,
+  # so the tests were passing even with the parameters reversed.
+  defp to_score(guess, answer) do
     %{guess: guess, score: Score.new(answer, guess)}
   end
 

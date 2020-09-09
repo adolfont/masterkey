@@ -20,7 +20,7 @@ defmodule MasterKeyWeb.GameLive do
     assign(socket, board: Game.new_board(answer))
   end
   defp board(socket, _) do
-    assign(socket, board: Game.new_board)
+    assign(socket, board: Game.new_board())
   end
 
   defp changeset(socket, params) do
@@ -59,6 +59,4 @@ defmodule MasterKeyWeb.GameLive do
   def handle_event("guess", %{"guess" => %{"guess" => params}}, socket) do
     {:noreply, guess(socket, params)}
   end
-
-
 end
