@@ -43,7 +43,7 @@ defmodule MasterKeyWeb.GameLive do
     """
   end
 
-  def render(%{game: %{status: :win}} = assigns) do
+  def render(%{game: %{status: :won}} = assigns) do
     ~L"""
     <button class="" phx-click="restart">Play again!</button>
     """
