@@ -2,7 +2,7 @@ defmodule MasterKeyWeb.GameLive do
   use MasterKeyWeb, :live_view
 
   alias MasterKey.Game
-  alias MasterKeyWeb.GuessFormData
+  alias MasterKeyWeb.{BoardComponent, GuessFormData}
 
   def mount(params, _session, socket) do
     {:ok, build(socket, params)}
@@ -40,6 +40,7 @@ defmodule MasterKeyWeb.GameLive do
   def render(assigns) do
     ~L"""
     <h1>Welcome to MasterKey!</h1>
+    <%= live_component(@socket, BoardComponent, game: @game) %>
     <div id="guess">
     <%= form_for @changeset, "#", [as: :guess, phx_change: :validate, phx_submit: :guess], fn f -> %>
       <label>

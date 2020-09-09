@@ -19,6 +19,7 @@ defmodule MasterKeyWeb.Router do
 
     live "/", PageLive, :index
     live "/game", GameLive
+    live "/game/:answer", GameLive
   end
 
   # Other scopes may use custom stacks.
