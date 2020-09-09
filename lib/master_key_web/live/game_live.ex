@@ -39,25 +39,29 @@ defmodule MasterKeyWeb.GameLive do
 
   def render(%{game: %{status: :lost}} = assigns) do
     ~L"""
-    <button class="" phx-click="restart">Play again!</button>
+    <h1 class="text-3xl text-purple-700">Try again...</h1>
+    <img src="/images/lost.gif">
+    <button class="bg-indigo-500 text-white font-medium py-2 px-4 rounded outline-none m-4" phx-click="restart">Play again!</button>
     """
   end
 
   def render(%{game: %{status: :won}} = assigns) do
     ~L"""
-    <button class="" phx-click="restart">Play again!</button>
+    <h1 class="text-3xl text-purple-700">Amazing!!!</h1>
+    <img src="/images/won.gif">
+    <button class="bg-indigo-500 text-white font-medium py-2 px-4 rounded outline-none m-4" phx-click="restart">Play again!</button>
     """
   end
 
   def render(%{game: %{status: :playing}} = assigns) do
     ~L"""
-    <h1 class="text-3xl text-purple-700">Welcome to MasterKey!</h1>
+    <h1 class="text-3xl text-purple-700 mb-4 pb-4 border-b-2">Welcome to MasterKey!</h1>
     <%= live_component(@socket, BoardComponent, game: @game) %>
     <div id="guess">
     <%= form_for @changeset, "#", [as: :guess, phx_change: :validate, phx_submit: :guess], fn f -> %>
       <div class="field">
         <label>Guess:
-          <%= text_input f, :guess %>
+          <%= text_input f, :guess, value: "" %>
         </label>
         <%= error_tag f, :guess %>
       </div>
