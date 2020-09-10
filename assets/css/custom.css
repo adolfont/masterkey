@@ -1,7 +1,6 @@
 /* Guess form */
 
 #guess {
-
   @apply flex flex-row justify-start;
 
   button {
