@@ -48,7 +48,7 @@ defmodule MasterKeyWeb.GameLive do
 
   def render(%{game: %{status: :lost}} = assigns) do
     ~L"""
-    <h1 class="text-3xl text-purple-700">Try again...</h1>
+    <h1 class="text-3xl text-purple-700 mb-4 pb-4 border-b-2">Try again...</h1>
     <img src=" <%= "/images/lost#{random_meme()}.gif" %>" >
     <button class="bg-indigo-500 text-white font-medium py-2 px-4 rounded outline-none m-4" phx-click="restart">Play again!</button>
     """
@@ -56,7 +56,7 @@ defmodule MasterKeyWeb.GameLive do
 
   def render(%{game: %{status: :won}} = assigns) do
     ~L"""
-    <h1 class="text-3xl text-purple-700">Amazing!!!</h1>
+    <h1 class="text-3xl text-purple-700 mb-4 pb-4 border-b-2">Amazing!!!</h1>
     <img src=" <%= "/images/won#{random_meme()}.gif" %>" >
     <button class="bg-indigo-500 text-white font-medium py-2 px-4 rounded outline-none m-4" phx-click="restart">Play again!</button>
     """
@@ -98,9 +98,9 @@ defmodule MasterKeyWeb.GameLive do
     {:noreply, build(socket, %{})}
   end
 
-  defp color(tries) when tries > 5, do: "green-600"
-  defp color(tries) when tries > 2, do: "yellow-500"
-  defp color(tries) when tries > 0, do: "red-600"
+  defp color(tries) when tries < 3 , do: "red-600"
+  defp color(tries) when tries < 6, do: "yellow-500"
+  defp color(_), do: "green-600"
 
   defp random_meme, do: Enum.random(1..3)
 
