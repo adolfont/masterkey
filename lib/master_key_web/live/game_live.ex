@@ -31,6 +31,13 @@ defmodule MasterKeyWeb.GameLive do
     assign(socket, game: Game.to_map(socket.assigns.board))
   end
 
+  defp tries(%{assigns: %{tries: tries}} = socket) when tries > 0 do
+    assign(socket, tries: tries - 1)
+  end
+  defp tries(socket) do
+    assign(socket, tries: 10)
+  end
+
   defp guess(socket, guess) do
     socket
     |> assign(board: Game.guess(socket.assigns.board, guess))
@@ -39,17 +46,10 @@ defmodule MasterKeyWeb.GameLive do
     |> changeset(%{})
   end
 
-  defp tries(%{assigns: %{tries: tries}} = socket) when tries > 0 do
-    assign(socket, tries: tries - 1)
-  end
-  defp tries(socket) do
-    assign(socket, tries: 10)
-  end
-
   def render(%{game: %{status: :lost}} = assigns) do
     ~L"""
     <h1 class="text-3xl text-purple-700">Try again...</h1>
-    <img src="/images/lost.gif">
+    <img src=" <%= "/images/lost#{random_meme()}.gif" %>" >
     <button class="bg-indigo-500 text-white font-medium py-2 px-4 rounded outline-none m-4" phx-click="restart">Play again!</button>
     """
   end
@@ -57,7 +57,7 @@ defmodule MasterKeyWeb.GameLive do
   def render(%{game: %{status: :won}} = assigns) do
     ~L"""
     <h1 class="text-3xl text-purple-700">Amazing!!!</h1>
-    <img src="/images/won.gif">
+    <img src=" <%= "/images/won#{random_meme()}.gif" %>" >
     <button class="bg-indigo-500 text-white font-medium py-2 px-4 rounded outline-none m-4" phx-click="restart">Play again!</button>
     """
   end
@@ -101,5 +101,7 @@ defmodule MasterKeyWeb.GameLive do
   defp color(tries) when tries > 5, do: "green-600"
   defp color(tries) when tries > 2, do: "yellow-500"
   defp color(tries) when tries > 0, do: "red-600"
+
+  defp random_meme, do: Enum.random(1..3)
 
 end
